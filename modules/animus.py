@@ -47,7 +47,9 @@ class object:
             error_msg = "Error: Object is not enchanted."
             if autoprint or debug: print(error_msg)
             return error_msg
-        
+
+#deltarune
+
 a = input("Enable debug mode? (true/false): ")
 debug = ifelse(a.lower() == "true")
 print(debug)
