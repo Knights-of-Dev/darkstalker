@@ -18,6 +18,11 @@ class object:
         self.isEnchanted = False
     def command(self, cmd):
         if self.isEnchanted:
-            return "The object shimmers with a magical aura."
+            return f"Object {self.livestat}.{([str(self.a), str(self.b), str(self.c)])} executed command: {cmd}"
         else:
             return "Error: Object is not enchanted."
+        
+
+a = object("dragon", "icewing")
+a.enchant()
+print(a.command("fly to the north"))
