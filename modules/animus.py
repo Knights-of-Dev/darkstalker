@@ -10,6 +10,10 @@ class object:
         self.b = b
         self.c = c
         self.isEnchanted = False
+        self.objectName = f"{self.livestat}"
+        if self.a != None: self.objectName = f"{self.objectName}.{self.a}"
+        if self.b != None: self.objectName = f"{self.objectName}.{self.b}"
+        if self.c != None: self.objectName = f"{self.objectName}.{self.c}"
     def getData(self):
         return (self.livestat, self.a, self.b, self.c)
     def enchant(self):
@@ -18,7 +22,7 @@ class object:
         self.isEnchanted = False
     def command(self, cmd):
         if self.isEnchanted:
-            return f"Object {self.livestat}.{([str(self.a), str(self.b), str(self.c)])} executed command: {cmd}"
+            return f"Object {self.objectName} executed command: {cmd}"
         else:
             return "Error: Object is not enchanted."
         
