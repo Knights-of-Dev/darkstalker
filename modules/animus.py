@@ -4,8 +4,23 @@
 REMINDER: after creating every primitive function, remove these comments which bloat everything!
 """
 
-import math
-# this may be useful later.
+from types import MappingProxyType
+
+temp_objects = {
+    "environment": {
+        "sky": ["sun", "moon-closest", "moon-middle", "moon-farthest"],
+        "land": {
+            "mountain": ["all", {"range": ["clawsOfTheClouds", "darkstalkersTeeth"]}, {"single": ["jadeMountain", "agateMountain", "borderlandMountain"]}],
+            "kingdom": ["all", "iceKingdom", "nightKingdom", "kingdomOfSand", "skyKingdom", "mudKingdom", "rainforestKingdom"]
+        },
+        "water": {
+            "kingdom": "kingdomOfTheSea"
+        }
+    },
+    "creature": ["animal", "dragon", "scavenger"]
+}
+objects = MappingProxyType(temp_objects)
+temp_objects = None
 
 global debug; debug = False
 # i didnt know you could put a semicolon IN PYTHON
@@ -15,6 +30,7 @@ def ifelse(con, tru=True, fal=False):
         return tru
     else:
         return fal
+
 
 class object:
     def __init__(self, livestat=None, a=None, b=None, c=None):
