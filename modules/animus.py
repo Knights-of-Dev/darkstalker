@@ -17,8 +17,7 @@ temp_objects = {
             "kingdom": "kingdomOfTheSea"
         }
     },
-    "creature": ["animal", "dragon", "scavenger"]
-}
+    "creature": [{"animal": ["all", "sloth", "unknown"]}, {"dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"]}, "scavenger"]}
 objects = MappingProxyType(temp_objects)
 temp_objects = None
 
