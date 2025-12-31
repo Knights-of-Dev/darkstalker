@@ -4,9 +4,11 @@
 REMINDER: after creating every primitive function, remove these comments which bloat everything!
 """
 
-from types import MappingProxyType
+
+from types import MappingProxyType # the only thing its good for
+
 import sys
-sys.tracebacklimit = 0
+sys.tracebacklimit = 0 # might actually turn this into a from import later
 
 temp_objects = {
     "environment": {
@@ -91,4 +93,4 @@ debug = ifelse(a.lower() == "true")
 print(debug)
 a = object("creature", "dragon", "icewing")
 a.enchant()
-a.command("fly to the north")
+a.command("fly to the SOUTH!! ha ha")
