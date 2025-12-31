@@ -5,6 +5,8 @@ REMINDER: after creating every primitive function, remove these comments which b
 """
 
 from types import MappingProxyType
+import sys
+sys.tracebacklimit = 0
 
 temp_objects = {
     "environment": {
@@ -17,7 +19,8 @@ temp_objects = {
             "kingdom": "kingdomOfTheSea"
         }
     },
-    "creature": [{"animal": ["all", "sloth", "unknown"]}, {"dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"]}, "scavenger"]}
+    "creature": {"animal": ["all", "sloth", "unknown"], "dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"], "scavenger": ["all"]}
+}
 objects = MappingProxyType(temp_objects)
 temp_objects = None
 
@@ -42,7 +45,25 @@ class object:
         if self.a != None: self.objectName = f"{self.objectName}.{self.a}"
         if self.b != None: self.objectName = f"{self.objectName}.{self.b}"
         if self.c != None: self.objectName = f"{self.objectName}.{self.c}"
+        if debug: print(f"Created object: {self.objectName}")
+        if self.livestat in objects:
+            if self.a != None and self.a in objects[self.livestat]:
+                if self.b != None and self.b in objects[self.livestat][self.a]:
+                    if self.c != None and self.c in objects[self.livestat][self.a][self.b]:
+                        pass
+                    else:
+                        if self.c != None: raise Exception(f"Unknown subtype: \"{self.c}\" for object: \"{self.livestat}\"")
+                else:
+                    if self.b != None: raise Exception(f"Unknown subtype: \"{self.b}\" for object: \"{self.livestat}\"")
+            else:
+                if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
+        else:
+            raise Exception(f"Unknown object type: \"{self.livestat}\"")
+    
     # i feel like this is a good place to stop and reflect on my life choices
+    # ...
+    # ok back to work
+
     def getData(self, autoprint=False):
         if autoprint or debug: print((self.livestat, self.a, self.b, self.c))
         return (self.livestat, self.a, self.b, self.c)
@@ -63,11 +84,11 @@ class object:
             if autoprint or debug: print(error_msg)
             return error_msg
 
-#deltarune
+#deltarunetomorrow
 
 a = input("Enable debug mode? (true/false): ")
 debug = ifelse(a.lower() == "true")
 print(debug)
-a = object("dragon", "icewing", "all")
+a = object("creature", "dragon", "icewing")
 a.enchant()
 a.command("fly to the north")
