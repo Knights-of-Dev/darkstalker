@@ -21,7 +21,11 @@ temp_objects = {
             "kingdom": "kingdomOfTheSea"
         }
     },
-    "creature": {"animal": ["all", "sloth", "unknown"], "dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"], "scavenger": ["all"]}
+    "creature": {
+        "animal": ["all", "sloth", "unknown"],
+        "dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"],
+        "scavenger": ["all"]
+        }
 }
 objects = MappingProxyType(temp_objects)
 temp_objects = None
@@ -61,6 +65,18 @@ class object:
                 if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
         else:
             raise Exception(f"Unknown object type: \"{self.livestat}\"")
+        # detect if the last option given is a key and not a list item
+        if self.a != None:
+            if self.b == None:
+                if isinstance(objects[self.livestat][self.a], (dict, list)):
+                    print(f"Warning! \"{self.a}\" has no further specifiers. This will select a subtype at random!")
+            else:
+                if self.c == None:
+                    if isinstance(objects[self.livestat][self.a][self.b], (dict, list)):
+                        print(f"Warning! \"{self.b}\" has no further specifiers. This will select a subtype at random!")
+        else:
+            if isinstance(objects[self.livestat], (dict, list)):
+                print(f"Warning! \"{self.livestat}\" has no further specifiers. This will select a subtype at random!")
     
     # i feel like this is a good place to stop and reflect on my life choices
     # ...
@@ -91,6 +107,6 @@ class object:
 a = input("Enable debug mode? (true/false): ")
 debug = ifelse(a.lower() == "true")
 print(debug)
-a = object("creature", "dragon", "icewing")
+a = object("creature", "dragon")
 a.enchant()
 a.command("fly to the SOUTH!! ha ha")
