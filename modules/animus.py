@@ -101,6 +101,16 @@ class object:
             error_msg = "Error: Object is not enchanted."
             if autoprint or debug: print(error_msg)
             return error_msg
+    def multicommand(self, *args, cmd, autoprint=False):
+        se = []
+        for ar in args:
+            if isinstance(ar, object):
+                if ar.isEnchanted:
+                    se.append(ar)
+            else:
+                print(f"Non-object ignored by multiselect: {ar}") # no i wont change it to multicommand
+        if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
+        return se
 
 #deltarunetomorrow
 
@@ -110,3 +120,4 @@ print(debug)
 a = object("creature", "dragon")
 a.enchant()
 a.command("fly to the SOUTH!! ha ha")
+print(type(a))
