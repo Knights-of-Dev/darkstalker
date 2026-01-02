@@ -12,23 +12,23 @@ sys.tracebacklimit = 4 # might actually turn this into a from import later
 
 temp_objects = {
     "environment": {
-        "sky": ["sun", "moon-closest", "moon-middle", "moon-farthest"],
+        "sky": {"sun": None, "moon-closest": None, "moon-middle": None, "moon-farthest": None},
         "land": {
-            "mountain": ["all", {"range": ["clawsOfTheClouds", "darkstalkersTeeth"]}, {"single": ["jadeMountain", "agateMountain", "borderlandMountain"]}],
-            "kingdom": ["all", "iceKingdom", "nightKingdom", "kingdomOfSand", "skyKingdom", "mudKingdom", "rainforestKingdom"]
+            "mountain": {"all": None, "range": {"clawsOfTheClouds": None, "darkstalkersTeeth": None}, "single": {"jadeMountain": None, "agateMountain": None, "borderlandMountain": None}},
+            "kingdom": {"all": None, "iceKingdom": None, "nightKingdom": None, "kingdomOfSand": None, "skyKingdom": None, "mudKingdom": None, "rainforestKingdom": None}
         },
         "water": {
-            "kingdom": "kingdomOfTheSea"
+            "kingdom": {"kingdomOfTheSea": None}
         }
     },
     "creature": {
-        "animal": ["all", "sloth", "unknown"],
-        "dragon": ["all", "icewing", "sandwing", "skywing", "mudwing", "rainwing", "nightwing", "seawing"],
-        "scavenger": ["all"]
+        "animal": {"all": None, "sloth": None, "unknown": None},
+        "dragon": {"all": None, "icewing": None, "sandwing": None, "skywing": None, "mudwing": None, "rainwing": None, "nightwing": None, "seawing": None},
+        "scavenger": {"all": None}
         }
 }
 objects = MappingProxyType(temp_objects)
-temp_objects = None
+del temp_objects # no more changeing!
 
 global debug; debug = False
 # i didnt know you could put a semicolon IN PYTHON
@@ -40,7 +40,7 @@ def ifelse(con, tru=True, fal=False):
         return fal
 
 
-class object:
+class world_object:
     def __init__(self, livestat=None, a=None, b=None, c=None, d=None):
         self.livestat = livestat
         self.a = a
@@ -116,14 +116,14 @@ class object:
 def multicommand(*args, cmd, autoprint=False):
     se = []
     for ar in args:
-        if isinstance(ar, object):
+        if isinstance(ar, world_object):
             if ar.isEnchanted:
                 se.append(ar.objectName)
                 if autoprint or debug: print(f"Object {ar.objectName} added to the selection.")
             else:
                 if autoprint or debug: print(f"Object {ar.objectName} is not enchanted and was ignored.")
         else:
-            print(f"Non-object ignored by multiselect: {ar}") # no i wont change it to multicommand
+            print(f"Non-world object ignored by multiselect: {ar}") # no i wont change it to multicommand
     if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
     return se
 
@@ -132,13 +132,13 @@ def multicommand(*args, cmd, autoprint=False):
 a = input("Enable debug mode? (true/false): ")
 debug = ifelse(a.lower() == "true")
 print(debug)
-a = object("creature", "dragon")
+a = world_object("creature", "dragon")
 a.enchant()
 a.command("fly to the SOUTH!! ha ha")
-b = object("environment", "land", "kingdom", "skyKingdom")
+b = world_object("environment", "land", "kingdom", "skyKingdom")
 b.enchant()
 b.command("give all icewings access to the sky kingdom")
-c = object("environment", "water", "kingdom")
+c = world_object("environment", "water", "kingdom")
 c.enchant()
 c.command("deactivate all Orca statues in the hatcheries")
 multicommand(a, b, c, "joe", cmd="hello")
