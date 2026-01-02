@@ -6,12 +6,12 @@ REMINDER: after creating every primitive function, remove these comments which b
 
 
 from types import MappingProxyType # the only thing its good for
-
 import sys
-sys.tracebacklimit = 4 # might actually turn this into a from import later
+sys.tracebacklimit = 0
 
 temp_objects = {
     "environment": {
+        "weather": None,
         "sky": {"sun": None, "moon-closest": None, "moon-middle": None, "moon-farthest": None},
         "land": {
             "mountain": {"all": None, "range": {"clawsOfTheClouds": None, "darkstalkersTeeth": None}, "single": {"jadeMountain": None, "agateMountain": None, "borderlandMountain": None}},
@@ -141,4 +141,4 @@ b.command("give all icewings access to the sky kingdom")
 c = world_object("environment", "water", "kingdom")
 c.enchant()
 c.command("deactivate all Orca statues in the hatcheries")
-multicommand(a, b, c, "joe", cmd="hello")
+multicommand(a, b, c, "environment.land", cmd="hello")
