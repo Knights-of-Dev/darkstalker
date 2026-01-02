@@ -1,11 +1,6 @@
-# i have hippopotomonstrosesquippedaliophobia
+# animus.py
 
-"""
-REMINDER: after creating every primitive function, remove these comments which bloat everything!
-"""
-
-
-from types import MappingProxyType # the only thing its good for
+from types import MappingProxyType
 import sys
 sys.tracebacklimit = 0
 
@@ -27,18 +22,11 @@ temp_objects = {
         "scavenger": {"all": None}
         }
 }
+
 objects = MappingProxyType(temp_objects)
-del temp_objects # no more changeing!
+del temp_objects
 
 global debug; debug = False
-# i didnt know you could put a semicolon IN PYTHON
-
-def ifelse(con, tru=True, fal=False):
-    if con:
-        return tru
-    else:
-        return fal
-
 
 class world_object:
     def __init__(self, livestat=None, a=None, b=None, c=None, d=None):
@@ -70,7 +58,6 @@ class world_object:
                 if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
         else:
             raise Exception(f"Unknown object type: \"{self.livestat}\"")
-        # detect if the last option given is a key and not a list item
         if self.a != None:
             if self.b == None:
                 if isinstance(objects[self.livestat][self.a], (dict, list)):
@@ -86,10 +73,6 @@ class world_object:
             if isinstance(objects[self.livestat], (dict, list)):
                 print(f"Warning! \"{self.livestat}\" has no further specifiers. This will select a subtype at random!")
     
-    # i feel like this is a good place to stop and reflect on my life choices
-    # ...
-    # ok back to work
-
     def getData(self, autoprint=False):
         tup = tuple(self.objectName.split("."))
         if autoprint or debug: print(tup)
@@ -100,7 +83,6 @@ class world_object:
         return True
     def disenchant(self, autoprint=False):
         self.isEnchanted = False
-        # debug and autoprint are pretty good together :3
         if debug or autoprint: print(f"Object {self.objectName} has been disenchanted.")
         return False
     def command(self, cmd, autoprint=False):
@@ -123,22 +105,6 @@ def multicommand(*args, cmd, autoprint=False):
             else:
                 if autoprint or debug: print(f"Object {ar.objectName} is not enchanted and was ignored.")
         else:
-            print(f"Non-world object ignored by multiselect: {ar}") # no i wont change it to multicommand
+            print(f"Non-world object ignored by multiselect: {ar}")
     if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
     return se
-
-#deltarunetomorrow
-
-a = input("Enable debug mode? (true/false): ")
-debug = ifelse(a.lower() == "true")
-print(debug)
-a = world_object("creature", "dragon")
-a.enchant()
-a.command("fly to the SOUTH!! ha ha")
-b = world_object("environment", "land", "kingdom", "skyKingdom")
-b.enchant()
-b.command("give all icewings access to the sky kingdom")
-c = world_object("environment", "water", "kingdom")
-c.enchant()
-c.command("deactivate all Orca statues in the hatcheries")
-multicommand(a, b, c, "environment.land", cmd="hello")
