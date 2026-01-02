@@ -29,7 +29,7 @@ del temp_objects
 global debug; debug = False
 
 class world_object:
-    def __init__(self, livestat=None, a=None, b=None, c=None, d=None):
+    def __init__(self, livestat=None, *rest):
         self.livestat = livestat
         self.a = a
         self.b = b
@@ -37,12 +37,21 @@ class world_object:
         self.d = d
         self.isEnchanted = False
         self.objectName = f"{self.livestat}"
-        if self.a != None: self.objectName = f"{self.objectName}.{self.a}"
-        if self.b != None: self.objectName = f"{self.objectName}.{self.b}"
-        if self.c != None: self.objectName = f"{self.objectName}.{self.c}"
-        if self.d != None: self.objectName = f"{self.objectName}.{self.d}"
+        for x in len(rest):
+            if x != None: self.objectName = f"{self.objectName}.{x}"
         if debug: print(f"Created object: {self.objectName}")
         if self.livestat in objects:
+            level = objects[self.livestat]
+            path = [self.livestat]
+            for n in rest:
+                if n is None: break
+                if n in level:
+                    level = level[n]
+                    path.append(n)
+                else:
+                    uhoh = ".".join(path)
+                    raise Exception(f"Unknown subtype: \"{n}\" for object: \"{uhoh}\"")
+            """
             if self.a != None and self.a in objects[self.livestat]:
                 if self.b != None and self.b in objects[self.livestat][self.a]:
                     if self.c != None and self.c in objects[self.livestat][self.a][self.b]:
@@ -56,8 +65,16 @@ class world_object:
                     if self.b != None: raise Exception(f"Unknown subtype: \"{self.b}\" for object: \"{self.livestat}.{self.a}\"")
             else:
                 if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
+        """
         else:
             raise Exception(f"Unknown object type: \"{self.livestat}\"")
+        current = objects[self.livestat]
+        for m in rest:
+            if m is None: break
+
+
+
+
         if self.a != None:
             if self.b == None:
                 if isinstance(objects[self.livestat][self.a], (dict, list)):
