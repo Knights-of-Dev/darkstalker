@@ -8,7 +8,7 @@ REMINDER: after creating every primitive function, remove these comments which b
 from types import MappingProxyType # the only thing its good for
 
 import sys
-sys.tracebacklimit = 0 # might actually turn this into a from import later
+sys.tracebacklimit = 4 # might actually turn this into a from import later
 
 temp_objects = {
     "environment": {
@@ -41,26 +41,31 @@ def ifelse(con, tru=True, fal=False):
 
 
 class object:
-    def __init__(self, livestat=None, a=None, b=None, c=None):
+    def __init__(self, livestat=None, a=None, b=None, c=None, d=None):
         self.livestat = livestat
         self.a = a
         self.b = b
         self.c = c
+        self.d = d
         self.isEnchanted = False
         self.objectName = f"{self.livestat}"
         if self.a != None: self.objectName = f"{self.objectName}.{self.a}"
         if self.b != None: self.objectName = f"{self.objectName}.{self.b}"
         if self.c != None: self.objectName = f"{self.objectName}.{self.c}"
+        if self.d != None: self.objectName = f"{self.objectName}.{self.d}"
         if debug: print(f"Created object: {self.objectName}")
         if self.livestat in objects:
             if self.a != None and self.a in objects[self.livestat]:
                 if self.b != None and self.b in objects[self.livestat][self.a]:
                     if self.c != None and self.c in objects[self.livestat][self.a][self.b]:
-                        pass
+                        if self.d != None and self.d in objects[self.livestat][self.a][self.b][self.c]:
+                            pass
+                        else:
+                            if self.d != None: raise Exception(f"Unknown subtype: \"{self.d}\" for object: \"{self.livestat}.{self.a}.{self.b}.{self.c}\"")
                     else:
-                        if self.c != None: raise Exception(f"Unknown subtype: \"{self.c}\" for object: \"{self.livestat}\"")
+                        if self.c != None: raise Exception(f"Unknown subtype: \"{self.c}\" for object: \"{self.livestat}.{self.a}.{self.b}\"")
                 else:
-                    if self.b != None: raise Exception(f"Unknown subtype: \"{self.b}\" for object: \"{self.livestat}\"")
+                    if self.b != None: raise Exception(f"Unknown subtype: \"{self.b}\" for object: \"{self.livestat}.{self.a}\"")
             else:
                 if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
         else:
@@ -70,10 +75,13 @@ class object:
             if self.b == None:
                 if isinstance(objects[self.livestat][self.a], (dict, list)):
                     print(f"Warning! \"{self.a}\" has no further specifiers. This will select a subtype at random!")
-            else:
-                if self.c == None:
-                    if isinstance(objects[self.livestat][self.a][self.b], (dict, list)):
-                        print(f"Warning! \"{self.b}\" has no further specifiers. This will select a subtype at random!")
+            elif self.c == None:
+                if isinstance(objects[self.livestat][self.a][self.b], (dict, list)):
+                    print(f"Warning! \"{self.b}\" has no further specifiers. This will select a subtype at random!")
+            elif self.d == None:
+                if type(objects[self.livestat][self.a][self.b][self.c]) != str:
+                    if isinstance(objects[self.livestat][self.a][self.b][self.c], (dict, list)):
+                        print(f"Warning! \"{self.c}\" has no further specifiers. This will select a subtype at random!")
         else:
             if isinstance(objects[self.livestat], (dict, list)):
                 print(f"Warning! \"{self.livestat}\" has no further specifiers. This will select a subtype at random!")
@@ -83,15 +91,18 @@ class object:
     # ok back to work
 
     def getData(self, autoprint=False):
-        if autoprint or debug: print((self.livestat, self.a, self.b, self.c))
-        return (self.livestat, self.a, self.b, self.c)
+        tup = tuple(self.objectName.split("."))
+        if autoprint or debug: print(tup)
+        return (tup)
     def enchant(self, autoprint=False):
         self.isEnchanted = True
         if debug or autoprint: print(f"Object {self.objectName} has been enchanted.")
+        return True
     def disenchant(self, autoprint=False):
         self.isEnchanted = False
         # debug and autoprint are pretty good together :3
         if debug or autoprint: print(f"Object {self.objectName} has been disenchanted.")
+        return False
     def command(self, cmd, autoprint=False):
         if self.isEnchanted:
             result = f"Object {self.objectName} executed command: {cmd}"
