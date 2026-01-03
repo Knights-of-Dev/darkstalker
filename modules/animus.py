@@ -2,7 +2,9 @@
 
 from types import MappingProxyType
 import sys
-sys.tracebacklimit = 0
+sys.tracebacklimit = 4
+
+global debug; debug = False
 
 temp_objects = {
     "environment": {
@@ -26,18 +28,12 @@ temp_objects = {
 objects = MappingProxyType(temp_objects)
 del temp_objects
 
-global debug; debug = False
-
 class world_object:
     def __init__(self, livestat=None, *rest):
         self.livestat = livestat
-        self.a = a
-        self.b = b
-        self.c = c
-        self.d = d
         self.isEnchanted = False
         self.objectName = f"{self.livestat}"
-        for x in len(rest):
+        for x in rest:
             if x != None: self.objectName = f"{self.objectName}.{x}"
         if debug: print(f"Created object: {self.objectName}")
         if self.livestat in objects:
@@ -69,12 +65,16 @@ class world_object:
         else:
             raise Exception(f"Unknown object type: \"{self.livestat}\"")
         current = objects[self.livestat]
-        for m in rest:
-            if m is None: break
+        for m, key in enumerate(rest):
+            if key is None: break
+            next = current[key]
+            if m + 1 == len(rest) or rest[m + 1] is None:
+                if isinstance(next, (dict, list)):
+                    print(f"Warning! \"{key}\" has no further specifiers. This will select a subtype at random!")
+                break
+            current = next
 
-
-
-
+        """
         if self.a != None:
             if self.b == None:
                 if isinstance(objects[self.livestat][self.a], (dict, list)):
@@ -89,7 +89,7 @@ class world_object:
         else:
             if isinstance(objects[self.livestat], (dict, list)):
                 print(f"Warning! \"{self.livestat}\" has no further specifiers. This will select a subtype at random!")
-    
+        """
     def getData(self, autoprint=False):
         tup = tuple(self.objectName.split("."))
         if autoprint or debug: print(tup)
@@ -125,3 +125,8 @@ def multicommand(*args, cmd, autoprint=False):
             print(f"Non-world object ignored by multiselect: {ar}")
     if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
     return se
+
+
+a = world_object("environment", "land", "mountain", "range", "clawsOfTheClouds")
+a.enchant()
+a.command("go go gadget")
