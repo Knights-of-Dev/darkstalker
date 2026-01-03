@@ -4,7 +4,7 @@ from types import MappingProxyType
 import sys
 sys.tracebacklimit = 4
 
-global debug; debug = False
+global debug; debug = True
 
 temp_objects = {
     "environment": {
@@ -47,21 +47,6 @@ class world_object:
                 else:
                     uhoh = ".".join(path)
                     raise Exception(f"Unknown subtype: \"{n}\" for object: \"{uhoh}\"")
-            """
-            if self.a != None and self.a in objects[self.livestat]:
-                if self.b != None and self.b in objects[self.livestat][self.a]:
-                    if self.c != None and self.c in objects[self.livestat][self.a][self.b]:
-                        if self.d != None and self.d in objects[self.livestat][self.a][self.b][self.c]:
-                            pass
-                        else:
-                            if self.d != None: raise Exception(f"Unknown subtype: \"{self.d}\" for object: \"{self.livestat}.{self.a}.{self.b}.{self.c}\"")
-                    else:
-                        if self.c != None: raise Exception(f"Unknown subtype: \"{self.c}\" for object: \"{self.livestat}.{self.a}.{self.b}\"")
-                else:
-                    if self.b != None: raise Exception(f"Unknown subtype: \"{self.b}\" for object: \"{self.livestat}.{self.a}\"")
-            else:
-                if self.a != None: raise Exception(f"Unknown subtype: \"{self.a}\" for object: \"{self.livestat}\"")
-        """
         else:
             raise Exception(f"Unknown object type: \"{self.livestat}\"")
         current = objects[self.livestat]
@@ -74,22 +59,6 @@ class world_object:
                 break
             current = next
 
-        """
-        if self.a != None:
-            if self.b == None:
-                if isinstance(objects[self.livestat][self.a], (dict, list)):
-                    print(f"Warning! \"{self.a}\" has no further specifiers. This will select a subtype at random!")
-            elif self.c == None:
-                if isinstance(objects[self.livestat][self.a][self.b], (dict, list)):
-                    print(f"Warning! \"{self.b}\" has no further specifiers. This will select a subtype at random!")
-            elif self.d == None:
-                if type(objects[self.livestat][self.a][self.b][self.c]) != str:
-                    if isinstance(objects[self.livestat][self.a][self.b][self.c], (dict, list)):
-                        print(f"Warning! \"{self.c}\" has no further specifiers. This will select a subtype at random!")
-        else:
-            if isinstance(objects[self.livestat], (dict, list)):
-                print(f"Warning! \"{self.livestat}\" has no further specifiers. This will select a subtype at random!")
-        """
     def getData(self, autoprint=False):
         tup = tuple(self.objectName.split("."))
         if autoprint or debug: print(tup)
@@ -125,8 +94,3 @@ def multicommand(*args, cmd, autoprint=False):
             print(f"Non-world object ignored by multiselect: {ar}")
     if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
     return se
-
-
-a = world_object("environment", "land", "mountain", "range", "clawsOfTheClouds")
-a.enchant()
-a.command("go go gadget")
