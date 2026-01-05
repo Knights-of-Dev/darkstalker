@@ -3,7 +3,6 @@
 from types import MappingProxyType
 import sys
 sys.tracebacklimit = 4
-
 global debug; debug = True
 
 temp_objects = {
@@ -24,7 +23,6 @@ temp_objects = {
         "scavenger": {"all": None}
         }
 }
-
 objects = MappingProxyType(temp_objects)
 del temp_objects
 
@@ -58,7 +56,6 @@ class world_object:
                     print(f"Warning! \"{key}\" has no further specifiers. This will select a subtype at random!")
                 break
             current = next
-
     def getData(self, autoprint=False):
         tup = tuple(self.objectName.split("."))
         if autoprint or debug: print(tup)
@@ -77,7 +74,7 @@ class world_object:
             if autoprint or debug: print(result)
             return result
         else:
-            error_msg = "Error: Object is not enchanted."
+            error_msg = f"Error: Object {self.objectName} is not enchanted."
             if autoprint or debug: print(error_msg)
             return error_msg
     
@@ -91,6 +88,6 @@ def multicommand(*args, cmd, autoprint=False):
             else:
                 if autoprint or debug: print(f"Object {ar.objectName} is not enchanted and was ignored.")
         else:
-            print(f"Non-world object ignored by multiselect: {ar}")
+            print(f"Non-indexed object ignored by multiselect: {ar}")
     if autoprint or debug: print(f"Selected objects ({se}) executed command: {cmd}")
     return se
