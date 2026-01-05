@@ -3,7 +3,7 @@
 from types import MappingProxyType
 import sys
 sys.tracebacklimit = 4
-global debug; debug = True
+global debug; debug = False
 
 temp_objects = {
     "environment": {
