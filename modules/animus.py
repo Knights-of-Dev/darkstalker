@@ -2,7 +2,7 @@
 
 from types import MappingProxyType
 import sys
-sys.tracebacklimit = 4
+sys.tracebacklimit = 0
 global debug; debug = False
 
 temp_objects = {
