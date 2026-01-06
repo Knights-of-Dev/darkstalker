@@ -19,7 +19,7 @@ temp_objects = {
     },
     "creature": {
         "animal": {"all": None, "sloth": None, "unknown": None},
-        "dragon": {"all": None, "icewing": None, "sandwing": None, "skywing": None, "mudwing": None, "rainwing": None, "nightwing": None, "seawing": None},
+        "dragon": {"all": None, "icewing": None, "sandwing": None, "skywing": None, "mudwing": None, "rainwing": None, "nightwing": None, "seawing": None, "hivewing": None, "silkwing": None, "leafwing": None, "beetlewing": None},
         "scavenger": {"all": None}
         }
 }
