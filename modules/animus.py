@@ -10,11 +10,15 @@ temp_objects = {
         "weather": None,
         "sky": {"sun": None, "moon-closest": None, "moon-middle": None, "moon-farthest": None},
         "land": {
+            "continent": {"all": None, "pyrrhia": None, "pantala": None},
             "mountain": {"all": None, "range": {"clawsOfTheClouds": None, "darkstalkersTeeth": None}, "single": {"jadeMountain": None, "agateMountain": None, "borderlandMountain": None}},
-            "kingdom": {"all": None, "iceKingdom": None, "nightKingdom": None, "kingdomOfSand": None, "skyKingdom": None, "mudKingdom": None, "rainforestKingdom": None}
+            "kingdom": {"all": None, "iceKingdom": None, "nightKingdom": None, "kingdomOfSand": None, "skyKingdom": None, "mudKingdom": None, "rainforestKingdom": None},
+            "jungle": {"poisonJungle": None},
+            "hive": {"tseteHive": None, "yellowjacketHive": None, "waspHive": None, "vinegaroonHive": None, "jewelHive": None, "hornetHive": None, "cicadaHive": None, "bloodwormHive": None, "mantisHive": None}
         },
         "water": {
-            "kingdom": {"kingdomOfTheSea": None}
+            "kingdom": {"kingdomOfTheSea": None},
+            "lakes": {"lakeScorpion": None}
         }
     },
     "creature": {
