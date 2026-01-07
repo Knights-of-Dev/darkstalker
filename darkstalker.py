@@ -8,7 +8,9 @@ darkstalker = animus.world_object("creature", "dragon", "nightwing")
 # look how good i look
 
 # i feel like killing Arctic today
-arctic = animus.world_object("creature", "dragon", "icewing")
+arctic = animus.world_object("creature", "dragon")
+a = animus.world_object("creature", "scavenger")
+animus.multicommand(arctic, a, "joe", cmd="wa wa wa", autoprint=True)
 arctic.enchant()
 # kill
 arctic.command("kys", autoprint=True) # owie
