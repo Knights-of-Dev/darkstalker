@@ -19,3 +19,9 @@ arctic.disenchant()
 del arctic # free up the memory because uhhh my scroll is full of garbage data
 
 # o
+
+# look i can change the colors of the moons
+moon1 = animus.world_object("environment", "sky", "moon-closest")
+moon1.enchant()
+moon1.command("turn red", autoprint=True)
+# the moon is now red.
